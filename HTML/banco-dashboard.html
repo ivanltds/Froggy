@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Console do Banco SQL - Froggy Store</title>
+    <!-- Importação de fontes premium e ícones acadêmicos -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ====================================================================
+           ESTILO CSS VANILLA: PREMIUM, NEON GLASSMORPHISM E DESIGN HIGH-TECH
+           ==================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #070913 0%, #0d0f22 100%);
+            color: #f8fafc;
+            overflow-x: hidden;
+            padding: 30px 20px;
+        }
+
+        /* Glowing backdrop effects */
+        .glow-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(140px);
+            z-index: 0;
+            opacity: 0.12;
+            pointer-events: none;
+        }
+        .sphere-1 { width: 500px; height: 500px; top: -50px; left: -100px; background: #6366f1; }
+        .sphere-2 { width: 500px; height: 500px; bottom: -100px; right: -100px; background: #c084fc; }
+        .sphere-3 { width: 400px; height: 400px; top: 35%; left: 40%; background: #10b981; }
+
+        .dashboard-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header-left h1 {
+            font-size: 2.3rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #38bdf8, #818cf8, #a855f7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header-left p {
+            color: #94a3b8;
+            font-size: 0.95rem;
+            margin-top: 5px;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .badge-status {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34d399;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+        }
+
+        .pulse-light {
+            width: 8px;
+            height: 8px;
+            background: #10b981;
+            border-radius: 50%;
+            animation: pulse-glow 1.8s infinite;
+        }
+
+        @keyframes pulse-glow {
+            0% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1.1); opacity: 0.4; box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .btn-link-voltar {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .btn-link-voltar:hover {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+        }
+
+        /* Responsive Dashboard Grid */
+        .workspace-grid {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 1100px) {
+            .workspace-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Glassmorphic Panel UI */
+        .painel-container {
+            background: rgba(13, 17, 30, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .painel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 4px solid #6366f1;
+            padding-left: 12px;
+        }
+
+        .painel-header h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #f1f5f9;
+        }
+
+        /* --- DIAGRAMA DE TABELAS (DER) --- */
+        .esquema-visual {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            align-items: center;
+            padding: 10px 0;
+            background: rgba(2, 6, 12, 0.3);
+            border-radius: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            max-height: 720px;
+            overflow-y: auto;
+        }
+
+        /* Estilização dos Cards das Tabelas */
+        .card-tabela {
+            width: 90%;
+            background: rgba(30, 41, 59, 0.85);
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+            transition: all 0.3s ease;
+        }
+
+        .card-tabela:hover {
+            border-color: #6366f1;
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.25);
+            transform: translateY(-2px);
+        }
+
+        .card-tabela-topo {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 10px 14px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #ffffff;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .card-tabela-topo .label-tabela {
+            font-size: 0.72rem;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 2px 6px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .card-tabela.conceitual .card-tabela-topo {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .card-tabela.conceitual {
+            border-style: dashed;
+            opacity: 0.8;
+        }
+
+        .lista-campos {
+            padding: 6px 0;
+        }
+
+        .campo-linha {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 14px;
+            font-size: 0.82rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            color: #e2e8f0;
+        }
+
+        .campo-linha:last-child {
+            border-bottom: none;
+        }
+
+        .campo-esquerdo {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 500;
+        }
+
+        .tipo-indicador {
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+        .pk { background: #eab308; color: #000; }
+        .uk { background: #a855f7; color: #fff; }
+        .fk { background: #3b82f6; color: #fff; }
+
+        .campo-tipo {
+            color: #94a3b8;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+        }
+
+        /* SVG visual relational line representations */
+        .relacao-v {
+            width: 1px;
+            height: 25px;
+            background: linear-gradient(to bottom, #6366f1, #3b82f6);
+            position: relative;
+        }
+
+        .relacao-v::before {
+            content: '1';
+            position: absolute;
+            top: -12px;
+            left: 5px;
+            color: #818cf8;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .relacao-v::after {
+            content: 'N';
+            position: absolute;
+            bottom: -12px;
+            left: 5px;
+            color: #60a5fa;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        /* --- EDITOR E TERMINAL SQL --- */
+        .sql-editor-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sql-editor-borda {
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.5);
+            background: #020617;
+        }
+
+        .editor-topo {
+            background: rgba(30, 41, 59, 0.6);
+            padding: 10px 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .editor-titulo {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-limpar {
+            background: transparent;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .btn-limpar:hover {
+            color: #f1f5f9;
+        }
+
+        .editor-corpo {
+            display: flex;
+            position: relative;
+        }
+
+        /* Line numbers inside simulated editor */
+        .numero-linhas {
+            padding: 15px 12px;
+            background: #050b18;
+            color: #334155;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            text-align: right;
+            user-select: none;
+            border-right: 1px solid rgba(255, 255, 255, 0.04);
+            line-height: 1.6;
+        }
+
+        .sql-textarea {
+            flex-grow: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: #38bdf8;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.92rem;
+            padding: 15px;
+            resize: vertical;
+            min-height: 140px;
+            line-height: 1.6;
+            tab-size: 4;
+        }
+
+        /* Botão Executar */
+        .editor-acoes-barra {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 5px;
+        }
+
+        .btn-rodar-sql {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            padding: 12px 28px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .btn-rodar-sql:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+            filter: brightness(1.1);
+        }
+
+        .btn-rodar-sql:active {
+            transform: translateY(0);
+        }
+
+        /* SQL Presets Helper Buttons */
+        .sql-shortcuts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .btn-shortcut {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #cbd5e1;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: 'Fira Code', monospace;
+        }
+
+        .btn-shortcut:hover {
+            background: rgba(99, 102, 241, 0.1);
+            border-color: rgba(99, 102, 241, 0.3);
+            color: #a5b4fc;
+        }
+
+        /* --- PAINEL: DADOS RETORNADOS (RESULT GRID) --- */
+        .console-saida {
+            background: #020617;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            min-height: 250px;
+            max-height: 480px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.6);
+        }
+
+        .console-saida-topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .status-mensagem {
+            color: #94a3b8;
+            font-weight: 500;
+        }
+
+        .status-mensagem.sucesso {
+            color: #34d399;
+        }
+
+        .status-mensagem.erro {
+            color: #f87171;
+        }
+
+        /* Dynamic result table */
+        .resultado-grid-scroll {
+            flex-grow: 1;
+            overflow: auto;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .grid-resultado {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.88rem;
+        }
+
+        .grid-resultado th {
+            background: rgba(30, 41, 59, 0.9);
+            padding: 10px 14px;
+            font-weight: 600;
+            color: #e2e8f0;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .grid-resultado td {
+            padding: 10px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: #cbd5e1;
+            font-family: 'Fira Code', monospace;
+            white-space: nowrap;
+        }
+
+        .grid-resultado tbody tr:hover {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .console-vazio {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #475569;
+            text-align: center;
+            gap: 10px;
+        }
+
+        .console-vazio svg {
+            width: 48px;
+            height: 48px;
+            stroke: #334155;
+            fill: none;
+        }
+
+        .console-erro-box {
+            color: #f87171;
+            background: rgba(239, 68, 68, 0.05);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 15px 20px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            line-height: 1.5;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+
+        /* Legend Academic Info */
+        .painel-estudos {
+            background: rgba(15, 23, 42, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            padding: 20px;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 25px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .painel-estudos {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .estudo-col h3 {
+            color: #f1f5f9;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .estudo-col p {
+            line-height: 1.5;
+        }
+
+        .estudo-col ul {
+            padding-left: 20px;
+            margin-top: 6px;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Glowing Background Spheres -->
+    <div class="glow-sphere sphere-1"></div>
+    <div class="glow-sphere sphere-2"></div>
+    <div class="glow-sphere sphere-3"></div>
+
+    <div class="dashboard-container">
+        
+        <header>
+            <div class="header-left">
+                <h1>🖥️ Console SQL SQLite e Modelagem de Tabelas</h1>
+                <p>Laboratório de Banco de Dados Interativo — PIM (UNIP 2026.1)</p>
+            </div>
+            <div class="header-actions">
+                <a href="login.html" class="btn-link-voltar">← Voltar ao Site</a>
+                <div class="badge-status">
+                    <div class="pulse-light"></div>
+                    <span>SQLite LIVE ATIVO</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="workspace-grid">
+            
+            <!-- COLUNA ESQUERDA: DESENHO DAS TABELAS (DER INTERATIVO) -->
+            <section class="painel-container">
+                <div class="painel-header">
+                    <h2>📊 Mapeamento de Tabelas (DER)</h2>
+                </div>
+                
+                <p style="font-size: 0.82rem; color: #64748b; margin-top: -10px;">
+                    Clique nas colunas das tabelas do diagrama para ver explicações teóricas rápidas abaixo!
+                </p>
+
+                <div class="esquema-visual">
+                    
+                    <!-- TABELA 1: USUARIOS (REAL) -->
+                    <div class="card-tabela" id="tabela-usuarios" onclick="explicarTabela('Usuarios', 'Tabela física real armazenada no banco SQLite. Utilizada pelo C# para validar e realizar novos logins.')">
+                        <div class="card-tabela-topo">
+                            <span>Usuarios</span>
+                            <span class="label-tabela">Física</span>
+                        </div>
+                        <div class="lista-campos">
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('PK - Id', 'Chave Primária Inteira. Configurada com AUTOINCREMENT, gerando valores ordenados e sequenciais automaticamente a cada registro.')">
+                                <span class="campo-esquerdo"><span class="tipo-indicador pk">PK</span> Id</span>
+                                <span class="campo-tipo">INTEGER</span>
+                            </div>
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('UK - Usuario', 'Restrição UNIQUE NOT NULL. Serve como Chave Alternativa para impedir que dois alunos cadastrem o mesmo usuário de login.')">
+                                <span class="campo-esquerdo"><span class="tipo-indicador uk">UK</span> Usuario</span>
+                                <span class="campo-tipo">VARCHAR(50)</span>
+                            </div>
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('Senha', 'Atributo NOT NULL. Persiste a credencial do usuário. Em produção, este valor seria armazenado de forma criptografada (hash com salt).')">
+                                <span class="campo-esquerdo">Senha</span>
+                                <span class="campo-tipo">VARCHAR(50)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Linha Conectora 1 -->
+                    <div class="relacao-v"></div>
+
+                    <!-- TABELA 2: LOGS DE ACESSO (CONCEITUAL EXTENSÃO) -->
+                    <div class="card-tabela conceitual" id="tabela-logs" onclick="explicarTabela('LogsDeAcesso', 'Tabela lógica sugerida como extensão do projeto. Armazenaria o histórico e a data/hora de cada tentativa de login.')">
+                        <div class="card-tabela-topo">
+                            <span>LogsDeAcesso</span>
+                            <span class="label-tabela" style="background: rgba(99,102,241,0.2); color: #a5b4fc;">Sugestão</span>
+                        </div>
+                        <div class="lista-campos">
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('PK - Id (Logs)', 'Chave Primária sequencial da tabela de logs para indexação única.')">
+                                <span class="campo-esquerdo"><span class="tipo-indicador pk">PK</span> Id</span>
+                                <span class="campo-tipo">INTEGER</span>
+                            </div>
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('FK - UsuarioId', 'Chave Estrangeira (Foreign Key). Referencia o Id da tabela Usuarios para garantir a Integridade Referencial entre as tabelas.')">
+                                <span class="campo-esquerdo" style="color: #60a5fa;"><span class="tipo-indicador fk">FK</span> UsuarioId</span>
+                                <span class="campo-tipo">INTEGER</span>
+                            </div>
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('DataHora', 'Campo do tipo DATETIME. Registra automaticamente o carimbo de data e hora em que a ação de login ocorreu.')">
+                                <span class="campo-esquerdo">DataHora</span>
+                                <span class="campo-tipo">DATETIME</span>
+                            </div>
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('Status', 'Atributo que registra se o login foi bem-sucedido ou se houve falha de credenciais.')">
+                                <span class="campo-esquerdo">Status</span>
+                                <span class="campo-tipo">VARCHAR(20)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Linha Conectora 2 -->
+                    <div class="relacao-v"></div>
+
+                    <!-- TABELA 3: PRODUTOS (CONCEITUAL FROGGY STORE) -->
+                    <div class="card-tabela conceitual" id="tabela-produtos" onclick="explicarTabela('Produtos', 'Tabela lógica que mapeia os produtos (camisetas, tênis, blusas) exibidos na tela principal da Froggy Store.')">
+                        <div class="card-tabela-topo">
+                            <span>Produtos</span>
+                            <span class="label-tabela" style="background: rgba(16,185,129,0.2); color: #34d399;">Froggy</span>
+                        </div>
+                        <div class="lista-campos">
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('PK - Id (Produtos)', 'Chave Primária identificadora de cada item da Froggy Store.')">
+                                <span class="campo-esquerdo"><span class="tipo-indicador pk">PK</span> Id</span>
+                                <span class="campo-tipo">INTEGER</span>
+                            </div>
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('Nome', 'Nome do produto (ex: Froggy Oversized Prime). Campo obrigatório.')">
+                                <span class="campo-esquerdo">Nome</span>
+                                <span class="campo-tipo">VARCHAR(100)</span>
+                            </div>
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('Preco', 'Valor decimal que armazena o preço monetário do produto.')">
+                                <span class="campo-esquerdo">Preco</span>
+                                <span class="campo-tipo">DECIMAL(10,2)</span>
+                            </div>
+                            <div class="campo-linha" onclick="event.stopPropagation(); explicarCampo('Categoria', 'Organiza o produto em divisões (camisetas, blusas ou tenis) facilitando buscas e indexações.')">
+                                <span class="campo-esquerdo">Categoria</span>
+                                <span class="campo-tipo">VARCHAR(50)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            
+            <!-- COLUNA DIREITA: WRITER DE QUERIES E EXIBIDOR DE DADOS LIVE -->
+            <section style="display: flex; flex-direction: column; gap: 30px;">
+                
+                <!-- PAINEL SUPERIOR: ÁREA DE ESCRITA DE QUERIES -->
+                <div class="painel-container">
+                    <div class="painel-header">
+                        <h2>✍️ Escreva e Execute Queries SQL</h2>
+                    </div>
+
+                    <div class="sql-editor-container">
+                        <p style="font-size: 0.88rem; color: #94a3b8; margin-top: -10px;">
+                            Escreva qualquer consulta SQLite válida abaixo (SELECT, INSERT, UPDATE, etc.) e clique em executar para rodar ao vivo no banco.
+                        </p>
+
+                        <!-- Editor de Código -->
+                        <div class="sql-editor-borda">
+                            <div class="editor-topo">
+                                <div class="editor-titulo">
+                                    <span>sqlite3_editor.sql</span>
+                                </div>
+                                <button class="btn-limpar" onclick="limparEditor()">Limpar Editor</button>
+                            </div>
+                            <div class="editor-corpo">
+                                <div class="numero-linhas">
+                                    1<br>2<br>3<br>4<br>5
+                                </div>
+                                <textarea id="editor-texto" class="sql-textarea" placeholder="SELECT * FROM Usuarios ORDER BY Id ASC;" spellcheck="false"></textarea>
+                            </div>
+                        </div>
+
+                        <!-- Barra de Ações -->
+                        <div class="editor-acoes-barra">
+                            <!-- Atalhos didáticos rápidos -->
+                            <div class="sql-shortcuts">
+                                <button class="btn-shortcut" onclick="carregarPreset('SELECT * FROM Usuarios ORDER BY Id ASC;')">SELECT Todos</button>
+                                <button class="btn-shortcut" onclick="carregarPreset('INSERT INTO Usuarios (Usuario, Senha) VALUES (\'professor_nota_10\', \'pim2026\');')">INSERT Teste</button>
+                                <button class="btn-shortcut" onclick="carregarPreset('SELECT COUNT(1) AS TotalDeUsuarios FROM Usuarios;')">COUNT(*) Total</button>
+                                <button class="btn-shortcut" onclick="carregarPreset('SELECT * FROM Usuarios WHERE Usuario = \'admin\';')">SELECT Admin</button>
+                            </div>
+
+                            <button class="btn-rodar-sql" onclick="executarSqlCustomizado()">
+                                ⚡ Executar SQL
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- PAINEL INFERIOR: RESULTADOS LIVE GRID -->
+                <div class="painel-container">
+                    <div class="painel-header">
+                        <h2>📊 Resultados Retornados</h2>
+                    </div>
+
+                    <div class="console-saida">
+                        <div class="console-saida-topo">
+                            <span>Retorno do Servidor C#</span>
+                            <span id="mensagem-status-conexao" class="status-mensagem">Aguardando execução...</span>
+                        </div>
+
+                        <!-- Tela do Grid Dinâmico -->
+                        <div class="resultado-grid-scroll" id="resultado-scroll-corpo" style="display: none;">
+                            <table class="grid-resultado" id="tabela-dinamica">
+                                <thead>
+                                    <!-- Gerado dinamicamente -->
+                                </thead>
+                                <tbody>
+                                    <!-- Gerado dinamicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Caixa de erros SQL -->
+                        <div class="console-erro-box" id="caixa-erro-sql" style="display: none;">
+                            <!-- Mensagem de erro SQL -->
+                        </div>
+
+                        <!-- Console Vazio Inicial -->
+                        <div class="console-vazio" id="console-mensagem-inicial">
+                            <svg viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                            <p style="font-weight: 500; font-size: 0.95rem; color: #64748b;">Nenhuma query executada ainda.</p>
+                            <p style="font-size: 0.8rem; color: #475569;">Escreva um código acima ou selecione um atalho e clique em Executar.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- PAINEL ACADÊMICO DE LEITURA -->
+                <div class="painel-estudos" id="painel-auditorio">
+                    <div class="estudo-col">
+                        <h3 id="auditorio-titulo">💡 Ajuda do Laboratório</h3>
+                        <p id="auditorio-corpo">
+                            Clique em qualquer tabela ou campo no painel esquerdo para carregar informações teóricas sobre relacionamentos relacionais, restrições UNIQUE, Chaves Estrangeiras (FK) e Chaves Primárias (PK) fundamentais para explicar na sua banca de PIM!
+                        </p>
+                    </div>
+                    <div class="estudo-col" style="border-left: 1px solid rgba(255,255,255,0.06); padding-left: 20px;">
+                        <h3>📖 Sugestões de Teste</h3>
+                        <p>Experimente rodar estes códigos acadêmicos:</p>
+                        <ul style="margin-left: 15px; font-size: 0.8rem; color: #64748b;">
+                            <li><code>SELECT * FROM Usuarios;</code> (Ver todos)</li>
+                            <li><code>INSERT INTO Usuarios (Usuario, Senha) VALUES ('novo', '123');</code> (Gravar)</li>
+                            <li><code>PRAGMA table_info(Usuarios);</code> (Ver estrutura física da tabela)</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!-- SCRIPTS DE COMPORTAMENTO INTERATIVO DINÂMICO -->
+    <script>
+        // Verificação de segurança de Origem CORS (file://)
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.location.protocol === "file:") {
+                const statusMsg = document.getElementById("mensagem-status-conexao");
+                const caixaErro = document.getElementById("caixa-erro-sql");
+                const consoleInicial = document.getElementById("console-mensagem-inicial");
+                
+                if (statusMsg) {
+                    statusMsg.innerText = "Protocolo file:// detectado.";
+                    statusMsg.className = "status-mensagem erro";
+                }
+                
+                if (caixaErro) {
+                    caixaErro.innerHTML = `⚠️ <strong>BLOQUEIO DE SEGURANÇA DO NAVEGADOR (CORS / PRIVATE NETWORK)</strong><br><br>` +
+                        `Você abriu esta página dando duplo clique diretamente no arquivo HTML local (protocolo <code>file://</code>).<br>` +
+                        `Os navegadores modernos impedem que páginas locais façam requisições AJAX/Fetch para servidores locais (localhost).<br><br>` +
+                        `👉 <strong>Como resolver para liberar todas as funções interativas:</strong><br>` +
+                        `Acesse a página através da URL do servidor C# digitando ou clicando no endereço abaixo:<br>` +
+                        `<a href="http://localhost:5000/HTML/banco-dashboard.html" target="_blank" style="color: #60a5fa; font-weight: bold; text-decoration: underline;">` +
+                        `http://localhost:5000/HTML/banco-dashboard.html</a>`;
+                    caixaErro.style.display = "block";
+                }
+                
+                if (consoleInicial) {
+                    consoleInicial.style.display = "none";
+                }
+            }
+        });
+
+        // Função para limpar editor
+        function limparEditor() {
+            document.getElementById("editor-texto").value = "";
+            document.getElementById("editor-texto").focus();
+        }
+
+        // Função para carregar preset de query
+        function carregarPreset(sql) {
+            document.getElementById("editor-texto").value = sql;
+            document.getElementById("editor-texto").focus();
+        }
+
+        // Elementos explicativos didáticos
+        function explicarTabela(nome, desc) {
+            document.getElementById("auditorio-titulo").innerHTML = `🗂️ Tabela: ${nome}`;
+            document.getElementById("auditorio-corpo").innerHTML = desc;
+            
+            // Focar visualmente na tabela selecionada
+            document.querySelectorAll(".card-tabela").forEach(card => card.style.borderColor = "rgba(255,255,255,0.1)");
+            const cardAtivo = document.getElementById("tabela-" + nome.toLowerCase().replace("de", ""));
+            if(cardAtivo) {
+                cardAtivo.style.borderColor = "#6366f1";
+            }
+        }
+
+        function explicarCampo(nome, desc) {
+            document.getElementById("auditorio-titulo").innerHTML = `🔑 Campo: ${nome}`;
+            document.getElementById("auditorio-corpo").innerHTML = desc;
+        }
+
+        // Função principal: Enviar SQL ao backend C# e montar tabela dinamicamente
+        async function executarSqlCustomizado() {
+            const sqlQuery = document.getElementById("editor-texto").value.trim();
+            const consoleInicial = document.getElementById("console-mensagem-inicial");
+            const gridScroll = document.getElementById("resultado-scroll-corpo");
+            const caixaErro = document.getElementById("caixa-erro-sql");
+            const statusMsg = document.getElementById("mensagem-status-conexao");
+            const tabelaDin = document.getElementById("tabela-dinamica");
+
+            if (!sqlQuery) {
+                alert("Por favor, digite uma query SQL no editor!");
+                return;
+            }
+
+            // Resetar tela de resultados
+            consoleInicial.style.display = "none";
+            gridScroll.style.display = "none";
+            caixaErro.style.display = "none";
+            statusMsg.className = "status-mensagem";
+            statusMsg.innerText = "Executando no servidor SQLite...";
+
+            try {
+                // Endpoint unificado do C#
+                const API_URL = window.location.origin.includes("localhost:5000") 
+                    ? "/api/banco/executar" 
+                    : "http://localhost:5000/api/banco/executar";
+
+                const resposta = await fetch(API_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({ Sql: sqlQuery })
+                });
+
+                const respostaDados = await resposta.json();
+
+                if (resposta.status === 200) {
+                    statusMsg.innerText = respostaDados.mensagem;
+                    statusMsg.classList.add("sucesso");
+
+                    if (respostaDados.tipo === "SELECT") {
+                        // Construir cabeçalhos dinamicamente a partir das colunas retornadas
+                        let theadHtml = "<tr>";
+                        respostaDados.colunas.forEach(col => {
+                            theadHtml += `<th>${col}</th>`;
+                        });
+                        theadHtml += "</tr>";
+                        tabelaDin.querySelector("thead").innerHTML = theadHtml;
+
+                        // Construir as linhas dinamicamente a partir do dicionário de resultados
+                        let tbodyHtml = "";
+                        if (respostaDados.linhas.length === 0) {
+                            tbodyHtml = `<tr><td colspan="${respostaDados.colunas.length}" style="text-align: center; color: #64748b; font-style: italic;">Nenhum registro encontrado para essa consulta.</td></tr>`;
+                        } else {
+                            respostaDados.linhas.forEach(linha => {
+                                tbodyHtml += "<tr>";
+                                respostaDados.colunas.forEach(col => {
+                                    tbodyHtml += `<td>${linha[col]}</td>`;
+                                });
+                                tbodyHtml += "</tr>";
+                            });
+                        }
+                        tabelaDin.querySelector("tbody").innerHTML = tbodyHtml;
+                        gridScroll.style.display = "block";
+                    } else {
+                        // É um comando de escrita (INSERT, UPDATE, DELETE, etc.) que não retorna registros
+                        tabelaDin.querySelector("thead").innerHTML = "";
+                        tabelaDin.querySelector("tbody").innerHTML = `
+                            <tr>
+                                <td style="text-align: center; padding: 40px; color: #34d399; font-size: 0.95rem;">
+                                    ✔️ <strong>Comando de Manipulação SQL executado com sucesso!</strong><br>
+                                    <span style="font-size: 0.8rem; color: #94a3b8; display: block; margin-top: 5px;">
+                                        Linhas de dados afetadas no banco físico: ${respostaDados.linhasAfetadas}
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                        gridScroll.style.display = "block";
+                    }
+                } else {
+                    // Erro retornado pelo compilador SQLite
+                    statusMsg.innerText = "Falha de sintaxe ou integridade no SQL.";
+                    statusMsg.classList.add("erro");
+                    caixaErro.innerText = `[ERRO DO SQLITE - C# EXCEPTION]\n${respostaDados.erro || "Falha na query executada."}`;
+                    caixaErro.style.display = "block";
+                }
+            } catch (erro) {
+                console.error(erro);
+                statusMsg.innerText = "Erro ao conectar com a API C#.";
+                statusMsg.classList.add("erro");
+                caixaErro.innerText = `[FALHA DE REDE OU SERVIDOR OFFLINE]\nNão foi possível fazer contato com a Minimal API na porta 5000.\n\nCertifique-se de que:\n1. O backend está rodando no terminal com 'dotnet run'\n2. A porta local 5000 está livre.`;
+                caixaErro.style.display = "block";
+            }
+        }
+    </script>
+</body>
+</html>

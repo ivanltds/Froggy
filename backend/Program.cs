@@ -157,6 +157,114 @@ app.MapPost("/api/cadastro", (CadastroRequest request) =>
 });
 
 // ----------------------------------------------------------------------------
+// 3.8. ROTA VISUAL: RECURSO ACADÊMICO PARA EXIBIR DADOS DO SQLITE NO PAINEL
+// ----------------------------------------------------------------------------
+app.MapGet("/api/banco/usuarios", () =>
+{
+    try
+    {
+        using (var conexao = new SqliteConnection(connectionString))
+        {
+            conexao.Open();
+            string sql = "SELECT Id, Usuario FROM Usuarios ORDER BY Id ASC";
+            var lista = new List<object>();
+
+            using (var comando = new SqliteCommand(sql, conexao))
+            {
+                using (var leitor = comando.ExecuteReader())
+                {
+                    while (leitor.Read())
+                    {
+                        lista.Add(new { 
+                            id = leitor.GetInt32(0), 
+                            usuario = leitor.GetString(1) 
+                        });
+                    }
+                }
+            }
+            return Results.Ok(lista);
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[ERRO AO BUSCAR USUARIOS]: {ex.Message}");
+        return Results.Json(new { mensagem = "Erro ao ler a tabela Usuarios do SQLite." }, statusCode: 500);
+    }
+});
+
+// ----------------------------------------------------------------------------
+// 3.9. CONSULTA DINÂMICA: RECURSO ACADÊMICO PARA EXECUTAR QUALQUER QUERY SQL
+// ----------------------------------------------------------------------------
+app.MapPost("/api/banco/executar", (ExecutarQueryRequest request) =>
+{
+    if (string.IsNullOrWhiteSpace(request.Sql))
+    {
+        return Results.BadRequest(new { mensagem = "A query SQL não pode estar vazia." });
+    }
+
+    try
+    {
+        using (var conexao = new SqliteConnection(connectionString))
+        {
+            conexao.Open();
+            string sqlUpper = request.Sql.Trim().ToUpper();
+
+            using (var comando = new SqliteCommand(request.Sql, conexao))
+            {
+                // Se a query começa com SELECT, PRAGMA, EXPLAIN ou WITH, tratamos como consulta com dados de retorno
+                if (sqlUpper.StartsWith("SELECT") || sqlUpper.StartsWith("PRAGMA") || sqlUpper.StartsWith("EXPLAIN") || sqlUpper.StartsWith("WITH"))
+                {
+                    var colunas = new List<string>();
+                    var linhas = new List<Dictionary<string, object>>();
+
+                    using (var leitor = comando.ExecuteReader())
+                    {
+                        int camposCount = leitor.FieldCount;
+                        for (int i = 0; i < camposCount; i++)
+                        {
+                            colunas.Add(leitor.GetName(i));
+                        }
+
+                        while (leitor.Read())
+                        {
+                            var linha = new Dictionary<string, object>();
+                            for (int i = 0; i < camposCount; i++)
+                            {
+                                var valor = leitor.GetValue(i);
+                                linha[leitor.GetName(i)] = valor == DBNull.Value ? "NULL" : valor;
+                            }
+                            linhas.Add(linha);
+                        }
+                    }
+
+                    return Results.Ok(new { 
+                        tipo = "SELECT", 
+                        colunas = colunas, 
+                        linhas = linhas, 
+                        mensagem = $"Sucesso! {linhas.Count} registros retornados." 
+                    });
+                }
+                else
+                {
+                    // Comandos DDL ou DML de escrita (INSERT, UPDATE, DELETE, CREATE, DROP, etc.)
+                    int linhasAfetadas = comando.ExecuteNonQuery();
+                    return Results.Ok(new { 
+                        tipo = "NON_QUERY", 
+                        linhasAfetadas = linhasAfetadas, 
+                        mensagem = $"Sucesso! Comando executado. Linhas afetadas: {linhasAfetadas}." 
+                    });
+                }
+            }
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"[ERRO DE QUERY SQLITE]: {ex.Message}");
+        return Results.Json(new { erro = ex.Message }, statusCode: 400); // 400 com mensagem de erro amigável para exibir na tela
+    }
+});
+
+// ----------------------------------------------------------------------------
 // 5. FUNÇÃO DIDÁTICA DE INICIALIZAÇÃO DO BANCO
 // ----------------------------------------------------------------------------
 void InicializarBancoDeDados(string connString)
@@ -222,3 +330,4 @@ app.Run("http://localhost:5000");
 public record LoginRequest(string Usuario, string Senha);
 public record LoginResponse(bool Sucesso, string Mensagem);
 public record CadastroRequest(string Usuario, string Senha);
+public record ExecutarQueryRequest(string Sql);

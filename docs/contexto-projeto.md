@@ -57,8 +57,10 @@ Desenvolver uma API básica e simplista em C# (com "aparência de trabalho unive
 | frontend/index.html                        | @dev        | Frontend HTML Login      |
 | frontend/login-integracao.js               | @dev        | Script Fetch de Login    |
 | INSTRUCOES.md                              | @maestro    | Guia acadêmico do aluno  |
+| docs/apresentacao-banco.md                 | @maestro    | Guia de Apresentação SQL |
+| HTML/banco-dashboard.html                  | @maestro    | Painel Interativo do Banco|
 
 ## Última Atualização
 - Data    : 2026-05-17
-- Por     : @devops (Antigravity)
-- Motivo  : Otimização drástica de assets (PNG -> WebP), remoção de arquivos e pastas mortas e reconstrução do histórico Git para clonagem ultraveloz.
+- Por     : @maestro (Antigravity)
+- Motivo  : Criação de guia acadêmico premium e de um painel interativo de banco de dados (HTML/banco-dashboard.html) com DER, console SQL e dados live da API C#.
