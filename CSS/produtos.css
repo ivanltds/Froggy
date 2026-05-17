@@ -1,124 +1,222 @@
-/* =========================
-   RESET / GLOBAL
-========================= */
+/* ============================================================================
+   PRODUTOS STYLE - PREMIUM & CLEAN
+   ============================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
 * {
+  box-sizing: border-box;
   scroll-behavior: smooth;
   margin: 0;
   padding: 0;
   outline: 0;
   border: none;
   text-decoration: none;
-  transition: 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: "Montserrat", sans-serif;
 }
 
 :root {
-  --branco: #fff;
   --roxo: #552583;
-  --cinza-claro: #b8b8b8;
-  --cinza-escuro: #262626;
-  --preto: #000;
+  --roxo-claro: #7b3eb3;
+  --roxo-glow: rgba(85, 37, 131, 0.4);
   --amarelo: #fdb927;
+  --amarelo-hover: #ffe45c;
+  --branco: #ffffff;
+  --cinza-claro: #cccccc;
+  --cinza-escuro: #1e1e24;
+  --preto: #08080b;
+  --fundo-dark: linear-gradient(135deg, #08080b 0%, #160a22 100%);
+  --glass-fundo: rgba(255, 255, 255, 0.03);
+  --glass-borda: rgba(255, 255, 255, 0.08);
 }
 
 body {
-  background: var(--cinza-escuro);
+  background: var(--preto);
+  background-image: var(--fundo-dark);
+  background-attachment: fixed;
   color: var(--branco);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* ============================================================================
+   HEADER (GLASSMORPHISM)
+   ============================================================================ */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--roxo);
-  border-bottom: 2px solid var(--branco);
+  background: rgba(22, 10, 34, 0.8);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--glass-borda);
+  padding: 15px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 .logo-container img {
-  width: 150px;
-  padding-left: 20px;
+  width: 140px;
+  display: block;
 }
 
 .logo-container img:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 8px var(--amarelo));
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  gap: 20px;
 }
 
 .navbar a {
   color: var(--branco);
-  margin: 10px;
-  font-size: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--amarelo);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
 }
 
 .navbar a:hover {
   color: var(--amarelo);
-  text-decoration: underline 2px var(--amarelo);
+  background: rgba(255, 255, 255, 0.05);
 }
 
+.navbar a:hover::after {
+  width: 60%;
+}
+
+/* EXTRAS */
 .extras-navbar {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-right: 20px;
+  gap: 20px;
+}
+
+/* ============================================================================
+   CARRINHO
+   ============================================================================ */
+.carrinho-box {
+  position: relative;
 }
 
 .carrinho {
-  width: 70px;
+  width: 38px;
   cursor: pointer;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
 }
 
-/* =========================
-   USUÁRIO / DROPDOWN
-========================= */
+.carrinho-box:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.contador {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff3333;
+  color: var(--branco);
+  font-size: 11px;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #160a22;
+  box-shadow: 0 0 10px rgba(255, 51, 51, 0.6);
+}
+
+/* ============================================================================
+   USUÁRIO & DROPDOWN
+   ============================================================================ */
 .usuario-box {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 44px;
+  height: 44px;
   cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid var(--amarelo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 10px rgba(253, 185, 39, 0.2);
+}
+
+.usuario-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px var(--roxo-glow);
+  border-color: var(--amarelo-hover);
 }
 
 .img-usuario {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 #iniciais-usuario {
   position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
   color: var(--amarelo);
+  font-weight: 800;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 900;
-  font-size: 36px;
   opacity: 0;
+  pointer-events: none;
 }
 
 .dropdown {
   position: absolute;
-  top: 80px;
+  top: 55px;
   right: 0;
-  background: var(--roxo);
-  border: 1px solid var(--amarelo);
-  border-radius: 8px;
+  background: rgba(18, 8, 29, 0.95);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(253, 185, 39, 0.3);
+  border-radius: 12px;
   display: none;
   flex-direction: column;
-  min-width: 150px;
-  z-index: 999;
+  min-width: 180px;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 8px 0;
+  overflow: hidden;
 }
 
 .dropdown button {
   background: none;
   color: var(--branco);
-  padding: 10px;
+  padding: 12px 20px;
   cursor: pointer;
   text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  width: 100%;
 }
 
 .dropdown button:hover {
@@ -126,188 +224,276 @@ body {
   color: var(--preto);
 }
 
-/* =========================
-   PRODUTO PRINCIPAL
-========================= */
+/* ============================================================================
+   PRODUTO PRINCIPAL (TELA DE PRODUTO)
+   ============================================================================ */
 .produto-container {
   display: flex;
-  gap: 50px;
+  gap: 60px;
   max-width: 1100px;
   margin: 60px auto;
   align-items: center;
+  background: var(--glass-fundo);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-borda);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.produto-img {
+  flex: 1.2;
 }
 
 .produto-img img {
-  width: 500px;
-  border-radius: 10px;
+  width: 100%;
+  max-width: 500px;
+  border-radius: 16px;
+  border: 1px solid var(--glass-borda);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
 }
 
 .produto-info {
-  max-width: 400px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .produto-info h1 {
   font-size: 32px;
-  font-weight: 900;
+  font-weight: 800;
+  color: var(--branco);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.produto-info h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--amarelo);
+  margin-top: 10px;
+  border-radius: 2px;
+  box-shadow: 0 0 5px var(--amarelo);
 }
 
 .descricao {
-  margin: 20px 0;
+  margin: 25px 0;
   color: var(--cinza-claro);
+  font-size: 15px;
+  line-height: 1.6;
 }
 
-.preco {
-  font-size: 28px;
-  font-weight: bold;
+.preco-produto {
+  font-size: 32px;
+  font-weight: 800;
   color: var(--amarelo);
+  margin-bottom: 25px;
 }
 
-/* =========================
-   QUANTIDADE
-========================= */
+/* ============================================================================
+   QUANTIDADE SELECTOR
+   ============================================================================ */
 .quantidade-box {
   display: flex;
   align-items: center;
   gap: 15px;
-  margin: 20px 0;
+  margin-bottom: 25px;
 }
 
 .quantidade-box button {
-  padding: 5px 15px;
+  width: 40px;
+  height: 40px;
   font-size: 18px;
-  background: var(--roxo);
+  font-weight: 700;
+  background: rgba(255,255,255,0.05);
   color: var(--branco);
-  border-radius: 5px;
+  border: 1px solid var(--glass-borda);
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .quantidade-box button:hover {
-  background: var(--amarelo);
-  color: var(--preto);
+  background: var(--roxo);
+  border-color: var(--roxo-claro);
 }
 
-/* =========================
+.quantidade-box span {
+  font-size: 18px;
+  font-weight: 700;
+  min-width: 30px;
+  text-align: center;
+}
+
+/* ============================================================================
    BOTÃO COMPRAR
-========================= */
+   ============================================================================ */
 .comprar {
-  margin-top: 10px;
-  padding: 12px 25px;
-  background-color: var(--cinza-escuro);
-  color: var(--cinza-claro);
-  border: 1px solid var(--amarelo);
-  font-weight: 900;
+  padding: 14px 28px;
+  background: var(--amarelo);
+  color: var(--preto);
+  border-radius: 10px;
+  font-weight: 800;
   cursor: pointer;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 15px;
+  width: 100%;
 }
 
 .comprar:hover {
-  background-color: var(--amarelo);
-  color: var(--preto);
-} 
-
-.comprar:active {
-  background-color: green;
+  background: var(--amarelo-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(253, 185, 39, 0.4);
 }
 
-/* =========================
+.comprar:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================================
    RECOMENDADOS
-========================= */
+   ============================================================================ */
 .recomendados {
   margin-top: 80px;
   text-align: center;
+  padding: 0 40px;
 }
 
 .recomendados h2 {
   font-size: 32px;
-  margin-bottom: 30px;
+  font-weight: 800;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+.recomendados h2::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: var(--amarelo);
+  margin: 15px auto 0 auto;
+  border-radius: 2px;
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  max-width: 90%;
+  margin: 40px auto;
 }
 
 .card-produto {
-  background-color: var(--roxo);
-  border: 1px solid var(--amarelo);
-  border-radius: 10px;
-  padding: 10px;
-  width: 250px;
+  background: var(--glass-fundo);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-borda);
+  border-radius: 16px;
+  padding: 15px;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
 .card-produto:hover {
-  transform: scale(1.05);
+  transform: translateY(-5px);
+  border-color: rgba(253, 185, 39, 0.4);
+  box-shadow: 0 12px 24px rgba(85, 37, 131, 0.2);
 }
 
 .card-produto img {
   width: 100%;
-  border-radius: 10px;
+  border-radius: 12px;
+  margin-bottom: 12px;
 }
 
 .titulo-produto {
-  font-size: 16px;
-  margin-top: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--branco);
+  margin-bottom: 8px;
+  text-transform: uppercase;
 }
 
 .preco-produto {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 800;
   color: var(--amarelo);
+  margin-bottom: 12px;
 }
 
-/* =========================
-   BOTÃO VER MAIS
-========================= */
 .ver-mais {
-  margin-top: 10px;
-  padding: 8px;
-  font-weight: 900;
-  background-color: var(--cinza-escuro);
-  color: var(--cinza-claro);
-  border: 1px solid var(--amarelo);
+  padding: 10px 20px;
+  background: var(--roxo);
+  color: var(--branco);
+  border-radius: 8px;
+  font-weight: 700;
   cursor: pointer;
+  font-size: 13px;
+  width: 100%;
 }
 
 .ver-mais:hover {
-  background-color: var(--amarelo);
+  background: var(--amarelo);
   color: var(--preto);
 }
 
-/* =========================
-   FOOTER
-========================= */
+/* ============================================================================
+   FOOTER (AT RODAPÉ)
+   ============================================================================ */
 .footer {
-  background-color: var(--roxo);
-  color: var(--branco);
-  padding: 25px;
+  background: rgba(15, 7, 21, 0.95);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid var(--glass-borda);
+  color: var(--cinza-claro);
+  padding: 30px 20px;
   text-align: center;
-  margin-top: 50px;
+  margin-top: auto;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
-/* =========================
-   RESPONSIVO
-========================= */
-@media (max-width: 768px) {
+.footer p {
+  margin: 5px 0;
+}
 
+.footer p:last-child {
+  color: rgba(255,255,255,0.4);
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+/* ============================================================================
+   RESPONSIVO
+   ============================================================================ */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+  }
+  .navbar {
+    display: none;
+  }
   .produto-container {
     flex-direction: column;
-    text-align: center;
+    padding: 20px;
+    margin: 20px;
+    gap: 30px;
   }
-
   .produto-img img {
-    width: 100%;
-    max-width: 350px;
-  }
-
-  .produto-info {
     max-width: 100%;
+  }
+  .produto-info h1 {
+    font-size: 26px;
   }
 }
 
-/* =========================
-   VLIBRAS
-========================= */
 [vw] {
   z-index: 9999 !important;
 }
