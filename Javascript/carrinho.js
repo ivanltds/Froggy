@@ -12,8 +12,20 @@ if (user) {
 function renderizarCarrinho() {
   const container = document.getElementById("lista-carrinho");
   const totalSpan = document.getElementById("total");
+  const resumoDiv = document.querySelector(".resumo");
 
   container.innerHTML = "";
+
+  if (carrinho.length === 0) {
+    container.innerHTML = `<p class="carrinho-vazio-mensagem">Seu carrinho está vazio</p>`;
+    if (resumoDiv) {
+      resumoDiv.style.display = "none";
+    }
+  } else {
+    if (resumoDiv) {
+      resumoDiv.style.display = "block";
+    }
+  }
 
   let total = 0;
 

@@ -1,0 +1,616 @@
+/* ====================================================================
+           ESTILO CSS VANILLA: PREMIUM, NEON GLASSMORPHISM E DESIGN HIGH-TECH
+           ==================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #070913 0%, #0d0f22 100%);
+    color: #f8fafc;
+    overflow-x: hidden;
+    padding: 30px 20px;
+}
+
+/* Glowing backdrop effects */
+.glow-sphere {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(140px);
+    z-index: 0;
+    opacity: 0.12;
+    pointer-events: none;
+}
+
+.sphere-1 {
+    width: 500px;
+    height: 500px;
+    top: -50px;
+    left: -100px;
+    background: #6366f1;
+}
+
+.sphere-2 {
+    width: 500px;
+    height: 500px;
+    bottom: -100px;
+    right: -100px;
+    background: #c084fc;
+}
+
+.sphere-3 {
+    width: 400px;
+    height: 400px;
+    top: 35%;
+    left: 40%;
+    background: #10b981;
+}
+
+.dashboard-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+
+.header-left h1 {
+    font-size: 2.3rem;
+    font-weight: 700;
+    background: linear-gradient(to right, #38bdf8, #818cf8, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-left p {
+    color: #94a3b8;
+    font-size: 0.95rem;
+    margin-top: 5px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.badge-status {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34d399;
+    padding: 8px 18px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+}
+
+.pulse-light {
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: pulse-glow 1.8s infinite;
+}
+
+@keyframes pulse-glow {
+    0% {
+        transform: scale(0.95);
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    }
+
+    70% {
+        transform: scale(1.1);
+        opacity: 0.4;
+        box-shadow: 0 0 0 8px rgba(16, 185, 129, 0);
+    }
+
+    100% {
+        transform: scale(0.95);
+        opacity: 1;
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+    }
+}
+
+.btn-link-voltar {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #e2e8f0;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.btn-link-voltar:hover {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+}
+
+/* Responsive Dashboard Grid */
+.workspace-grid {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 30px;
+}
+
+@media (max-width: 1100px) {
+    .workspace-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Glassmorphic Panel UI */
+.painel-container {
+    background: rgba(13, 17, 30, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 25px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.painel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid #6366f1;
+    padding-left: 12px;
+}
+
+.painel-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #f1f5f9;
+}
+
+/* --- DIAGRAMA DE TABELAS (DER) --- */
+.esquema-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding: 10px 0;
+    background: rgba(2, 6, 12, 0.3);
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.03);
+    max-height: 720px;
+    overflow-y: auto;
+}
+
+/* Estilização dos Cards das Tabelas */
+.card-tabela {
+    width: 90%;
+    background: rgba(30, 41, 59, 0.85);
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
+    transition: all 0.3s ease;
+}
+
+.card-tabela:hover {
+    border-color: #6366f1;
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.25);
+    transform: translateY(-2px);
+}
+
+.card-tabela-topo {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    padding: 10px 14px;
+    font-weight: 600;
+    font-size: 0.92rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.card-tabela-topo .label-tabela {
+    font-size: 0.72rem;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 6px;
+    border-radius: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.card-tabela.conceitual .card-tabela-topo {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.card-tabela.conceitual {
+    border-style: dashed;
+    opacity: 0.8;
+}
+
+.lista-campos {
+    padding: 6px 0;
+}
+
+.campo-linha {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 14px;
+    font-size: 0.82rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+    color: #e2e8f0;
+}
+
+.campo-linha:last-child {
+    border-bottom: none;
+}
+
+.campo-esquerdo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+}
+
+.tipo-indicador {
+    font-size: 0.7rem;
+    font-weight: bold;
+    padding: 1px 4px;
+    border-radius: 3px;
+}
+
+.pk {
+    background: #eab308;
+    color: #000;
+}
+
+.uk {
+    background: #a855f7;
+    color: #fff;
+}
+
+.fk {
+    background: #3b82f6;
+    color: #fff;
+}
+
+.campo-tipo {
+    color: #94a3b8;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+}
+
+/* SVG visual relational line representations */
+.relacao-v {
+    width: 1px;
+    height: 25px;
+    background: linear-gradient(to bottom, #6366f1, #3b82f6);
+    position: relative;
+}
+
+.relacao-v::before {
+    content: '1';
+    position: absolute;
+    top: -12px;
+    left: 5px;
+    color: #818cf8;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.relacao-v::after {
+    content: 'N';
+    position: absolute;
+    bottom: -12px;
+    left: 5px;
+    color: #60a5fa;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+/* --- EDITOR E TERMINAL SQL --- */
+.sql-editor-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.sql-editor-borda {
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.5);
+    background: #020617;
+}
+
+.editor-topo {
+    background: rgba(30, 41, 59, 0.6);
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.editor-titulo {
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-limpar {
+    background: transparent;
+    border: none;
+    color: #64748b;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.btn-limpar:hover {
+    color: #f1f5f9;
+}
+
+.editor-corpo {
+    display: flex;
+    position: relative;
+}
+
+/* Line numbers inside simulated editor */
+.numero-linhas {
+    padding: 15px 12px;
+    background: #050b18;
+    color: #334155;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    text-align: right;
+    user-select: none;
+    border-right: 1px solid rgba(255, 255, 255, 0.04);
+    line-height: 1.6;
+}
+
+.sql-textarea {
+    flex-grow: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #38bdf8;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.92rem;
+    padding: 15px;
+    resize: vertical;
+    min-height: 140px;
+    line-height: 1.6;
+    tab-size: 4;
+}
+
+/* Botão Executar */
+.editor-acoes-barra {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+}
+
+.btn-rodar-sql {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 12px 28px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    transition: all 0.2s ease;
+}
+
+.btn-rodar-sql:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
+    filter: brightness(1.1);
+}
+
+.btn-rodar-sql:active {
+    transform: translateY(0);
+}
+
+/* SQL Presets Helper Buttons */
+.sql-shortcuts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.btn-shortcut {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    color: #cbd5e1;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: 'Fira Code', monospace;
+}
+
+.btn-shortcut:hover {
+    background: rgba(99, 102, 241, 0.1);
+    border-color: rgba(99, 102, 241, 0.3);
+    color: #a5b4fc;
+}
+
+/* --- PAINEL: DADOS RETORNADOS (RESULT GRID) --- */
+.console-saida {
+    background: #020617;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 250px;
+    max-height: 480px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.console-saida-topo {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+.status-mensagem {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.status-mensagem.sucesso {
+    color: #34d399;
+}
+
+.status-mensagem.erro {
+    color: #f87171;
+}
+
+/* Dynamic result table */
+.resultado-grid-scroll {
+    flex-grow: 1;
+    overflow: auto;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.grid-resultado {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    font-size: 0.88rem;
+}
+
+.grid-resultado th {
+    background: rgba(30, 41, 59, 0.9);
+    padding: 10px 14px;
+    font-weight: 600;
+    color: #e2e8f0;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.08);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.8rem;
+    white-space: nowrap;
+}
+
+.grid-resultado td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+    color: #cbd5e1;
+    font-family: 'Fira Code', monospace;
+    white-space: nowrap;
+}
+
+.grid-resultado tbody tr:hover {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.console-vazio {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #475569;
+    text-align: center;
+    gap: 10px;
+}
+
+.console-vazio svg {
+    width: 48px;
+    height: 48px;
+    stroke: #334155;
+    fill: none;
+}
+
+.console-erro-box {
+    color: #f87171;
+    background: rgba(239, 68, 68, 0.05);
+    border: 1px solid rgba(239, 68, 68, 0.2);
+    padding: 15px 20px;
+    border-radius: 8px;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.85rem;
+    white-space: pre-wrap;
+    line-height: 1.5;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+/* Legend Academic Info */
+.painel-estudos {
+    background: rgba(15, 23, 42, 0.35);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    padding: 20px;
+    font-size: 0.85rem;
+    color: #94a3b8;
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 25px;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .painel-estudos {
+        grid-template-columns: 1fr;
+    }
+}
+
+.estudo-col h3 {
+    color: #f1f5f9;
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.estudo-col p {
+    line-height: 1.5;
+}
+
+.estudo-col ul {
+    padding-left: 20px;
+    margin-top: 6px;
+    line-height: 1.5;
+}
