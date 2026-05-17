@@ -1,133 +1,222 @@
-/* =========================
-   RESET GLOBAL
-========================= */
+/* ============================================================================
+   CARRINHO & PAGAMENTO STYLE - PREMIUM & CLEAN
+   ============================================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
 * {
+  box-sizing: border-box;
   scroll-behavior: smooth;
   margin: 0;
   padding: 0;
   outline: 0;
   border: none;
   text-decoration: none;
-  transition: 0.2s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-family: "Montserrat", sans-serif;
 }
 
-/* =========================
-   VARIÁVEIS
-========================= */
 :root {
-  --branco: #fff;
   --roxo: #552583;
-  --cinza-claro: #b8b8b8;
-  --cinza-escuro: #262626;
-  --preto: #000;
+  --roxo-claro: #7b3eb3;
+  --roxo-glow: rgba(85, 37, 131, 0.4);
   --amarelo: #fdb927;
+  --amarelo-hover: #ffe45c;
+  --branco: #ffffff;
+  --cinza-claro: #cccccc;
+  --cinza-escuro: #1e1e24;
+  --preto: #08080b;
+  --fundo-dark: linear-gradient(135deg, #08080b 0%, #160a22 100%);
+  --glass-fundo: rgba(255, 255, 255, 0.03);
+  --glass-borda: rgba(255, 255, 255, 0.08);
 }
 
-/* =========================
-   BODY
-========================= */
 body {
-  background: var(--cinza-escuro);
+  background: var(--preto);
+  background-image: var(--fundo-dark);
+  background-attachment: fixed;
   color: var(--branco);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* =========================
-   HEADER
-========================= */
+/* ============================================================================
+   HEADER (GLASSMORPHISM)
+   ============================================================================ */
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: var(--roxo);
-  border-bottom: 2px solid var(--branco);
+  background: rgba(22, 10, 34, 0.8);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--glass-borda);
+  padding: 15px 40px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
 }
 
 .logo-container img {
-  width: 150px;
-  padding-left: 20px;
+  width: 140px;
+  display: block;
 }
 
 .logo-container img:hover {
-  transform: scale(1.1);
+  transform: scale(1.05);
+  filter: drop-shadow(0 0 8px var(--amarelo));
+}
+
+/* NAVBAR */
+.navbar {
+  display: flex;
+  gap: 20px;
 }
 
 .navbar a {
   color: var(--branco);
-  margin: 10px;
-  font-size: 24px;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.navbar a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--amarelo);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
 }
 
 .navbar a:hover {
   color: var(--amarelo);
-  text-decoration: underline 2px var(--amarelo);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-/* =========================
-   NAVBAR EXTRAS
-========================= */
+.navbar a:hover::after {
+  width: 60%;
+}
+
+/* EXTRAS */
 .extras-navbar {
   display: flex;
   align-items: center;
-  gap: 15px;
-  margin-right: 20px;
+  gap: 20px;
+}
+
+/* ============================================================================
+   CARRINHO
+   ============================================================================ */
+.carrinho-box {
+  position: relative;
 }
 
 .carrinho {
-  width: 70px;
+  width: 38px;
   cursor: pointer;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
 }
 
-/* =========================
-   USUÁRIO / DROPDOWN
-========================= */
+.carrinho-box:hover {
+  transform: translateY(-2px) scale(1.05);
+}
+
+.contador {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background: #ff3333;
+  color: var(--branco);
+  font-size: 11px;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #160a22;
+  box-shadow: 0 0 10px rgba(255, 51, 51, 0.6);
+}
+
+/* ============================================================================
+   USUÁRIO & DROPDOWN
+   ============================================================================ */
 .usuario-box {
   position: relative;
-  width: 70px;
-  height: 70px;
+  width: 44px;
+  height: 44px;
   cursor: pointer;
+  border-radius: 50%;
+  border: 2px solid var(--amarelo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 0 10px rgba(253, 185, 39, 0.2);
+}
+
+.usuario-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 15px var(--roxo-glow);
+  border-color: var(--amarelo-hover);
 }
 
 .img-usuario {
   width: 100%;
   height: 100%;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 #iniciais-usuario {
   position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
   color: var(--amarelo);
+  font-weight: 800;
+  font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 900;
-  font-size: 36px;
   opacity: 0;
+  pointer-events: none;
 }
 
-/* DROPDOWN */
 .dropdown {
   position: absolute;
-  top: 80px;
+  top: 55px;
   right: 0;
-  background: var(--roxo);
-  border: 1px solid var(--amarelo);
-  border-radius: 8px;
+  background: rgba(18, 8, 29, 0.95);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(253, 185, 39, 0.3);
+  border-radius: 12px;
   display: none;
   flex-direction: column;
-  min-width: 150px;
-  z-index: 999;
+  min-width: 180px;
+  z-index: 1000;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  padding: 8px 0;
+  overflow: hidden;
 }
 
 .dropdown button {
   background: none;
   color: var(--branco);
-  padding: 10px;
+  padding: 12px 20px;
   cursor: pointer;
+  text-align: left;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  width: 100%;
 }
 
 .dropdown button:hover {
@@ -135,148 +224,422 @@ body {
   color: var(--preto);
 }
 
-/* =========================
-   TÍTULO
-========================= */
+/* ============================================================================
+   TÍTULO & CONTAINER
+   ============================================================================ */
 .titulo {
   text-align: center;
-  font-size: 50px;
+  color: var(--branco);
+  font-size: 38px;
   font-weight: 800;
   margin-top: 80px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
 }
 
-/* =========================
-   CARRINHO
-========================= */
+.titulo::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 4px;
+  background: var(--amarelo);
+  margin: 15px auto 0 auto;
+  border-radius: 2px;
+  box-shadow: 0 0 8px var(--amarelo);
+}
+
 .carrinho-container {
-  max-width: 1000px;
-  margin: 40px auto;
+  max-width: 800px;
+  width: 90%;
+  margin: 50px auto;
 }
 
+/* ============================================================================
+   ITEMS DE COMPRA
+   ============================================================================ */
 .item {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--roxo);
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 10px;
+  background: var(--glass-fundo);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-borda);
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+}
+
+.item:hover {
+  border-color: rgba(253,185,39,0.2);
+  background: rgba(255,255,255,0.05);
 }
 
 .item img {
   width: 80px;
-  border-radius: 8px;
+  height: 80px;
+  border-radius: 12px;
+  object-fit: cover;
+  border: 1px solid var(--glass-borda);
 }
 
 .info {
   flex: 1;
-  margin-left: 15px;
+  margin-left: 20px;
 }
 
-/* =========================
-   BOTÕES
-========================= */
-button {
-  background-color: var(--amarelo);
+.info h3 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--branco);
+  text-transform: uppercase;
+  margin-bottom: 5px;
+}
+
+.info p {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--amarelo);
+}
+
+/* QUANTIDADE CONTROLS */
+.quantidade {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255,255,255,0.04);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--glass-borda);
+}
+
+.quantidade button {
+  background: none;
+  color: var(--branco);
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0;
+  margin: 0;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
-  color: var(--preto);
-  font-size: 10px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  margin: 10px 0;
+  border-radius: 4px;
 }
 
-button:active {
-  background-color: green;
-}
-
-.remover {
-  margin-left: 10px;
-  background: red;
+.quantidade button:hover {
+  background: var(--roxo);
   color: var(--branco);
 }
 
-/* =========================
-   RESUMO
-========================= */
-.resumo {
-  margin-top: 30px;
+.quantidade span {
+  font-size: 15px;
+  font-weight: 700;
+  min-width: 20px;
   text-align: center;
 }
 
-#finalizar {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background-color: var(--cinza-escuro);
-  color: var(--cinza-claro);
-  border: 1px solid var(--amarelo);
+/* REMOVER BUTTON */
+.remover {
+  background: rgba(255, 51, 51, 0.15);
+  border: 1px solid rgba(255, 51, 51, 0.3);
+  color: #ff4d4d;
+  font-size: 12px;
   font-weight: 700;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  margin-left: 15px;
+}
+
+.remover:hover {
+  background: #ff3333;
+  color: var(--branco);
+  box-shadow: 0 0 10px rgba(255,51,51,0.4);
+}
+
+/* ============================================================================
+   RESUMO / BOTÃO FINALIZAR
+   ============================================================================ */
+.resumo {
+  background: var(--glass-fundo);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-borda);
+  border-radius: 16px;
+  padding: 25px;
+  text-align: center;
+  margin-top: 40px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+}
+
+.resumo h2 {
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--branco);
+  margin-bottom: 15px;
+}
+
+#total {
+  color: var(--amarelo);
+  font-weight: 800;
+}
+
+#finalizar {
+  padding: 14px 28px;
+  background: var(--amarelo);
+  color: var(--preto);
+  border-radius: 10px;
+  font-weight: 800;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 15px;
+  width: 100%;
+  max-width: 300px;
+  margin: 10px auto 0 auto;
+  display: block;
 }
 
 #finalizar:hover {
-  background-color: var(--amarelo);
-  color: var(--preto);
-  font-weight: 900;
+  background: var(--amarelo-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(253, 185, 39, 0.4);
 }
 
-/* =========================
+#finalizar:active {
+  transform: scale(0.98);
+}
+
+/* ============================================================================
    POPUP PAGAMENTO
-========================= */
+   ============================================================================ */
 .popup {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.7);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
   display: none;
   justify-content: center;
   align-items: center;
+  z-index: 2000;
 }
 
 .popup-box {
-  background: var(--cinza-escuro);
-  padding: 30px;
-  border-radius: 10px;
-  border: 2px solid var(--amarelo);
-  width: 300px;
+  background: rgba(18, 8, 29, 0.98);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(253, 185, 39, 0.3);
+  border-radius: 20px;
+  padding: 40px 30px;
+  width: 380px;
   text-align: center;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5),
+              0 0 40px rgba(85, 37, 131, 0.2);
+}
+
+.popup-box h2 {
+  color: var(--branco);
+  font-size: 22px;
+  font-weight: 800;
+  margin-bottom: 25px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.popup-box h2::after {
+  content: "";
+  display: block;
+  width: 40px;
+  height: 3px;
+  background: var(--amarelo);
+  margin: 10px auto 0 auto;
+  border-radius: 2px;
+}
+
+/* BOTÕES DE ESCOLHA */
+.popup-box button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 12px;
+  cursor: pointer;
+}
+
+.popup-box button:not([class]) {
+  background: var(--roxo);
+  color: var(--branco);
+}
+
+.popup-box button:not([class]):hover {
+  background: var(--roxo-claro);
+  transform: translateY(-2px);
+}
+
+/* PIX PANEL */
+#pix-box {
+  margin: 20px 0;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-borda);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+#pix-box h3 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  font-weight: 700;
+}
+
+#pix-box img {
+  border-radius: 8px;
+  border: 4px solid var(--branco);
+  margin-bottom: 10px;
+}
+
+#pix-box p {
+  color: var(--cinza-claro);
+  font-size: 13px;
+  margin-bottom: 15px;
+}
+
+#pix-box button {
+  background: var(--amarelo);
+  color: var(--preto);
+}
+
+#pix-box button:hover {
+  background: var(--amarelo-hover);
+}
+
+/* CARTÃO PANEL */
+#cartao-box {
+  margin: 20px 0;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-borda);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+#cartao-box h3 {
+  font-size: 16px;
+  margin-bottom: 15px;
+  font-weight: 700;
 }
 
 .popup input {
-  background-color: var(--cinza-escuro);
+  background: rgba(255,255,255,0.05);
   color: var(--branco);
-  border: 1px solid var(--cinza-claro);
-  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 8px;
   width: 100%;
-  margin-top: 10px;
-  padding: 8px;
+  margin-bottom: 12px;
+  padding: 12px;
+  font-size: 14px;
 }
 
-/* Input do Popup quando estiver o cursor por cima */
-.popup input:hover {
-  background-color: var(--roxo);
-  color: var(--amarelo);
+.popup input::placeholder {
+  color: rgba(255,255,255,0.4);
 }
 
-/* Classe que esconde a box de PIX e Cartão */
-.hidden {
-  display: none;
+.popup input:focus {
+  border-color: var(--amarelo);
+  box-shadow: 0 0 10px rgba(253, 185, 39, 0.2);
 }
 
-/* =========================
-   FOOTER
-========================= */
+#cartao-box button {
+  background: var(--amarelo);
+  color: var(--preto);
+}
+
+#cartao-box button:hover {
+  background: var(--amarelo-hover);
+}
+
+/* MODAL ACTIONS (VOLTAR/CANCELAR) */
+.popup-box button[onclick="voltarPagamento()"] {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: var(--branco);
+}
+
+.popup-box button[onclick="voltarPagamento()"]:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.popup-box button[onclick="fecharPagamento()"] {
+  background: transparent;
+  color: rgba(255,51,51,0.8);
+  font-weight: 600;
+  margin-top: 5px;
+}
+
+.popup-box button[onclick="fecharPagamento()"]:hover {
+  color: #ff3333;
+  text-decoration: underline;
+}
+
+/* ============================================================================
+   FOOTER (AT RODAPÉ)
+   ============================================================================ */
 .footer {
-  background-color: var(--roxo);
-  padding: 25px;
+  background: rgba(15, 7, 21, 0.95);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid var(--glass-borda);
+  color: var(--cinza-claro);
+  padding: 30px 20px;
   text-align: center;
-  margin-top: 50px;
+  margin-top: auto;
+  font-size: 13px;
+  line-height: 1.6;
 }
 
-/* =========================
-   VLIBRAS
-========================= */
+.footer p {
+  margin: 5px 0;
+}
+
+.footer p:last-child {
+  color: rgba(255,255,255,0.4);
+  font-size: 12px;
+  margin-top: 10px;
+}
+
+/* ============================================================================
+   RESPONSIVO
+   ============================================================================ */
+@media (max-width: 768px) {
+  .header {
+    padding: 15px 20px;
+  }
+  .navbar {
+    display: none;
+  }
+  .item {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  .info {
+    margin: 0;
+  }
+  .remover {
+    margin: 0;
+  }
+  .popup-box {
+    width: 90%;
+    padding: 30px 20px;
+  }
+}
+
 [vw] {
   z-index: 9999 !important;
-} 
+}

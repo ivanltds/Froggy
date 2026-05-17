@@ -109,6 +109,7 @@ function confirmarPagamento() {
     itens: carrinho,
     total: carrinho.reduce((soma, item) => soma + item.preco * item.qtd, 0),
     data: new Date().toLocaleString(),
+    metodo: "PIX"
   };
 
   pedidos.push(novoPedido);
@@ -123,7 +124,71 @@ function confirmarPagamento() {
   salvarCarrinho();
   renderizarCarrinho();
 
-  alert("Pagamento realizado com sucesso!");
+  alert("Pagamento realizado com sucesso via PIX! 🐸");
+  window.location.href = "pedidos.html";
+}
+
+// ================= PAGAR CARTÃO =================
+function pagarCartao() {
+  if (!user) {
+    alert("Você precisa estar logado!");
+    return;
+  }
+
+  if (carrinho.length === 0) {
+    alert("Carrinho vazio!");
+    return;
+  }
+
+  const nome = document.getElementById("nome-cartao").value.trim();
+  const numero = document.getElementById("numero-cartao").value.trim();
+  const validade = document.getElementById("validade-cartao").value.trim();
+  const cvv = document.getElementById("cvv-cartao").value.trim();
+
+  if (!nome || !numero || !validade || !cvv) {
+    alert("Por favor, preencha todos os campos do cartão!");
+    return;
+  }
+
+  if (numero.replace(/\s/g, "").length < 16) {
+    alert("Número de cartão inválido!");
+    return;
+  }
+
+  if (validade.length < 5) {
+    alert("Validade de cartão inválida (use MM/AA)!");
+    return;
+  }
+
+  if (cvv.length < 3) {
+    alert("CVV inválido!");
+    return;
+  }
+
+  const pedidos =
+    JSON.parse(localStorage.getItem("pedidos_" + user.email)) || [];
+
+  const novoPedido = {
+    itens: carrinho,
+    total: carrinho.reduce((soma, item) => soma + item.preco * item.qtd, 0),
+    data: new Date().toLocaleString(),
+    metodo: "Cartão de Crédito"
+  };
+
+  pedidos.push(novoPedido);
+
+  localStorage.setItem(
+    "pedidos_" + user.email,
+    JSON.stringify(pedidos)
+  );
+
+  // limpar carrinho
+  carrinho = [];
+  salvarCarrinho();
+  renderizarCarrinho();
+
+  alert("Pagamento realizado com sucesso via Cartão! 🐸");
+  window.location.href = "pedidos.html";
 }
 
 // ================= ABRIR POPUP =================
