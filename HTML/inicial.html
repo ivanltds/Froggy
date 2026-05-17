@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <!-- CONFIGURAÇÕES -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Froggy Store</title>
+  <link rel="icon" type="image/x-icon" href="../IMG/F.png">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../CSS/inicial.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+
+    <!-- LOGO -->
+    <section class="logo-container">
+      <a href="inicial.html">
+        <img alt="logo" src="../IMG/LOGO LETRA AMARELA.png">
+      </a>
+    </section>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+      <a href="inicial.html#about">SOBRE</a>
+      <a href="inicial.html#camisetas">CAMISETAS</a>
+      <a href="inicial.html#blusas">BLUSAS</a>
+      <a href="inicial.html#tenis">TÊNIS</a>
+    </nav>
+
+    <!-- EXTRAS (CARRINHO + USUÁRIO) -->
+    <section class="extras-navbar">
+
+      <!-- CARRINHO -->
+      <div class="carrinho-box">
+        <a href="carrinho.html">
+          <img alt="carrinho" class="carrinho" src="../IMG/carrinho.png">
+          <span id="contador-carrinho" class="contador">0</span>
+        </a>
+      </div>
+
+      <!-- USUÁRIO -->
+      <div class="usuario-box" id="usuario-box">
+        <img alt="usuario" id="img-usuario" class="img-usuario" src="../IMG/usuário.png">
+        <span id="iniciais-usuario"></span>
+
+        <!-- DROPDOWN -->
+        <div id="dropdown" class="dropdown">
+          <button onclick="irPedidos()">Meus Pedidos</button>
+          <button onclick="logout()">Sair</button>
+        </div>
+      </div>
+
+    </section>
+  </header>
+
+  <!-- BANNER -->
+  <div class="banner-container">
+    <div id="banner-slide" class="banner-slide">
+      <img alt="banner 1" onclick="verProduto(6)" src="../IMG/BANNER/1.webp">
+      <img alt="banner 2" onclick="verProduto(7)" src="../IMG/BANNER/2.webp">
+      <img alt="banner 3" onclick="verProduto(3)" src="../IMG/BANNER/3.webp">
+    </div>
+  </div>
+
+  <!-- INDICADORES -->
+  <div id="indicadores" class="indicadores"></div>
+
+  <!-- SOBRE -->
+  <section id="about">
+    <h1 class="titulo">NOSSA HISTÓRIA</h1>
+    <p class="descricao">A FROGGY nasce com um propósito maior do que apenas vestir — cada peça carrega atitude, identidade e impacto. Este produto foi desenvolvido pensando no dia a dia de quem vive em movimento, unindo conforto, durabilidade e um design moderno que se destaca em qualquer ocasião.</p>
+    <p class="descricao">Com materiais de qualidade e acabamento premium, ele entrega não só estilo, mas também confiança. Cada detalhe foi pensado para oferecer a melhor experiência, desde o encaixe no corpo até a sensação ao usar.</p>
+    <p class="descricao">Além disso, ao escolher FROGGY, você faz parte de algo maior: uma marca com visão social, que acredita na moda como ferramenta de transformação, incentivando o bem-estar, a autoestima e oportunidades para a comunidade.</p>
+    <p class="descricao">FROGGY não é só roupa. É movimento, atitude e evolução.</p>
+  </section>
+
+  <!-- CAMISETAS -->
+  <section id="camisetas">
+    <h1 class="titulo">CAMISETAS</h1>
+    <p class="descricao">Minimalistas, versáteis e feitas para o dia a dia: Camisetas FROGGY com estilo street e essência original.</p>
+
+    <div class="container">
+
+      <!-- PRODUTO -->
+      <div class="card-produto">
+        <img alt="oversized prime" src="../IMG/Produtos/Froggy Oversized Prime - PRETA e AMARELA.webp">
+        <p class="titulo-produto">FROGGY OVERSIZED PRIME</p>
+        <p class="descricao-produto">Camiseta oversized premium com caimento moderno.</p>
+        <p class="preco-produto">R$149,90</p>
+        <button class="ver-mais" onclick="verProduto(1)">VER MAIS</button>
+      </div>
+
+      <!-- PRODUTO -->
+      <div class="card-produto">
+        <img alt="high tee" src="../IMG/Produtos/Froggy High Tee - BRANCA e ROXA.webp">
+        <p class="titulo-produto">FROGGY HIGH TEE</p>
+        <p class="descricao-produto">Estilo street com tecido leve e confortável.</p>
+        <p class="preco-produto">R$119,90</p>
+        <button class="ver-mais" onclick="verProduto(2)">VER MAIS</button>
+      </div>
+
+      <!-- PRODUTO -->
+      <div class="card-produto">
+        <img alt="classic polo" src="../IMG/Produtos/Froggy Classic Polo - PRETO e BRANCO.webp">
+        <p class="titulo-produto">FROGGY CLASSIC POLO</p>
+        <p class="descricao-produto">Polo clássica com toque sofisticado.</p>
+        <p class="preco-produto">R$139,90</p>
+        <button class="ver-mais" onclick="verProduto(3)">VER MAIS</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- BLUSAS -->
+  <section id="blusas">
+    <h1 class="titulo">BLUSAS</h1>
+    <p class="descricao">Visual moderno com máximo conforto para qualquer ocasião:  As blusas FROGGY representam autenticidade e personalidade.</p>
+
+    <div class="container">
+
+      <div class="card-produto">
+        <img alt="park urban" src="../IMG/Produtos/Froggy Park Urban - AMARELO e ROXO.webp">
+        <p class="titulo-produto">FROGGY PARK URBAN</p>
+        <p class="descricao-produto">Jaqueta urbana ideal para dias frios.</p>
+        <p class="preco-produto">R$199,90</p>
+        <button class="ver-mais" onclick="verProduto(4)">VER MAIS</button>
+      </div>
+
+      <div class="card-produto">
+        <img alt="windrunner street" src="../IMG/Produtos/Froggy Windrunner Street - ROXO com AMARELO.webp">
+        <p class="titulo-produto">FROGGY WINDRUNNER STREET</p>
+        <p class="descricao-produto">Moletom clássico confortável e versátil.</p>
+        <p class="preco-produto">R$359,90</p>
+        <button class="ver-mais" onclick="verProduto(5)">VER MAIS</button>
+      </div>
+
+      <div class="card-produto">
+        <img alt="crew classic" src="../IMG/Produtos/Froggy Crew Classic - ROXO e BRANCO.webp">
+        <p class="titulo-produto">FROGGY CREW CLASSIC</p>
+        <p class="descricao-produto">Corta-vento leve e resistente.</p>
+        <p class="preco-produto">R$229,90</p>
+        <button class="ver-mais" onclick="verProduto(6)">VER MAIS</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TENIS -->
+  <section id="tenis">
+    <h1 class="titulo">TÊNIS</h1>
+    <p class="descricao">Design moderno, conforto e durabilidade para o dia a dia: Os tênis FROGGY são feitos para quem busca estilo e qualidade em cada passo.</p>
+
+    <div class="container">
+
+      <div class="card-produto">
+        <img alt="slide flow" src="../IMG/Produtos/Froggy Slide Flow - BRANCO e ROXO.webp">
+        <p class="titulo-produto">FROGGY SLIDE FLOW</p>
+        <p class="descricao-produto">Chinelo confortável com design moderno.</p>
+        <p class="preco-produto">R$249,90</p>
+        <button class="ver-mais" onclick="verProduto(7)">VER MAIS</button>
+      </div>
+
+      <div class="card-produto">
+        <img alt="skate pro" src="../IMG/Produtos/Froggy Skate Pro - ROXO e AMARELO.webp">
+        <p class="titulo-produto">FROGGY SKATE PRO</p>
+        <p class="descricao-produto">Tênis resistente perfeito para Skatistas</p>
+        <p class="preco-produto">R$359,90</p>
+        <button class="ver-mais" onclick="verProduto(8)">VER MAIS</button>
+      </div>
+
+      <div class="card-produto">
+        <img alt="street one" src="../IMG/Produtos/Froggy Street One - BRANCO e ROXO.webp">
+        <p class="titulo-produto">FROGGY STREET ONE</p>
+        <p class="descricao-produto">Tênis premium com máximo conforto.</p>
+        <p class="preco-produto">R$229,90</p>
+        <button class="ver-mais" onclick="verProduto(9)">VER MAIS</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>Projeto Integrador Multidisciplinar - PIM</p>
+    <p>Universidade Paulista (UNIP) - Primeiro Semestre de 2026</p>
+    <p>Grupo 1: Matheus Sigoli, Caio Henrique, Bernardo Rodrigues, Antônio Roberto, Franklin Henrique</p>
+  </footer>
+
+  <!-- VLIBRAS (COM O JS) -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+  <!-- SCRIPTS -->
+  <script src="../Javascript/auth.js"></script>
+  <script src="../Javascript/usuario.js"></script>
+  <script src="../Javascript/inicial.js"></script>
+
+</body>
+</html>

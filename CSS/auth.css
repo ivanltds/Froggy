@@ -1,0 +1,157 @@
+/* =========================
+   RESET GLOBAL
+========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+/* =========================
+   VARIÁVEIS
+========================= */
+:root {
+  --roxo: #552583;
+  --amarelo: #fdb927;
+  --cinza-escuro: #262626;
+  --cinza-claro: #b8b8b8;
+  --branco: #ffffff;
+  --preto: #000000;
+}
+
+/* =========================
+   BODY / FUNDO
+========================= */
+body {
+  background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)),
+              url("/2026.1/PIM/Site/IMG/fundo amarelo.png");
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* =========================
+   CONTAINER
+========================= */
+.container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* =========================
+   BOX (LOGIN / CADASTRO)
+========================= */
+.box {
+  background: var(--cinza-escuro);
+  padding: 40px;
+  border-radius: 15px;
+  border: 2px solid var(--amarelo);
+  width: 350px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* =========================
+   LOGO
+========================= */
+.logo {
+  width: 180px;
+  margin-bottom: 20px;
+}
+
+/* =========================
+   TÍTULO
+========================= */
+.box h2 {
+  color: var(--amarelo);
+  margin-bottom: 20px;
+}
+
+/* =========================
+   INPUTS
+========================= */
+.box input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid var(--cinza-claro);
+  background: transparent;
+  color: var(--branco);
+  outline: none;
+}
+
+/* PLACEHOLDER */
+.box input::placeholder {
+  color: var(--cinza-claro);
+}
+
+/* FOCUS */
+.box input:focus {
+  border: 1px solid var(--amarelo);
+  box-shadow: 0 0 5px var(--amarelo);
+}
+
+/* =========================
+   BOTÃO
+========================= */
+.box button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: var(--roxo);
+  color: var(--amarelo);
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+/* HOVER */
+.box button:hover {
+  background: var(--amarelo);
+  color: var(--preto);
+  transform: scale(1.05);
+}
+
+/* =========================
+   LINKS
+========================= */
+.link {
+  margin-top: 15px;
+  color: var(--cinza-claro);
+  font-size: 14px;
+}
+
+.link a {
+  color: var(--amarelo);
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link a:hover {
+  text-decoration: underline;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+@media (max-width: 400px) {
+  .box {
+    width: 90%;
+    padding: 30px;
+  }
+}
+
+/* =========================
+   VLIBRAS
+========================= */
+[vw] {
+  z-index: 9999 !important;
+}

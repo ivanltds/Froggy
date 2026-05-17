@@ -1,0 +1,17 @@
+# .NET build artifacts
+[Bb]in/
+[Oo]bj/
+*.exe
+*.dll
+*.pdb
+
+# SQLite database files
+banco/banco.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# VS Code and OS files
+.vscode/
+.DS_Store
+Thumbs.db

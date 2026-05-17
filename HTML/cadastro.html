@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <!-- CONFIGURAÇÕES -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro - Froggy Store</title>
+  <link rel="icon" type="image/x-icon" href="../IMG/F.png">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="../CSS/auth.css">
+</head>
+
+<body>
+
+  <!-- CONTAINER DE CADASTRO -->
+  <div class="container">
+    <div class="box">
+
+      <!-- LOGO -->
+      <img alt="logo" src="../IMG/LOGO LETRA AMARELA.png" class="logo">
+
+      <!-- TÍTULO -->
+      <h2>CRIAR CONTA</h2>
+
+      <!-- FORMULÁRIO -->
+      <form onsubmit="handleCadastro(event)">
+        <input type="text" id="nome" placeholder="Seu nome" required>
+        <input type="email" id="email" placeholder="Seu email" required>
+        <input type="password" id="senha" placeholder="Sua senha" required>
+        <button type="submit">Cadastrar</button>
+      </form>
+
+      <!-- LINK -->
+      <p class="link">
+        Já tem conta? <a href="login.html">Entrar</a>
+      </p>
+
+    </div>
+  </div>
+
+  <!-- VLIBRAS -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+
+  <!-- VLIBRAS (COM O JS) -->
+  <div vw class="enabled">
+    <div vw-access-button class="active"></div>
+    <div vw-plugin-wrapper>
+      <div class="vw-plugin-top-wrapper"></div>
+    </div>
+  </div>
+  <script src="https://vlibras.gov.br/app/vlibras-plugin.js"></script>
+  <script>
+    new window.VLibras.Widget('https://vlibras.gov.br/app');
+  </script>
+
+  <!-- SCRIPT AUTH -->
+  <script src="../Javascript/auth.js"></script>
+
+  <!-- SCRIPT CADASTRO -->
+  <script>
+    function handleCadastro(e) {
+      e.preventDefault();
+
+      const nome = document.getElementById("nome").value;
+      const email = document.getElementById("email").value;
+      const senha = document.getElementById("senha").value;
+
+      cadastrar(nome, email, senha);
+    }
+  </script>
+
+</body>
+</html>

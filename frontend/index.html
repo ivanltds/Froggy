@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Aluno - Login Acadêmico</title>
+    <!-- Importação de fonte moderna para design premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* ====================================================================
+           ESTILO CSS VANILLA: PREMIUM, MODERNO E RESPONSIVO
+           ==================================================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+            color: #f8fafc;
+            overflow: hidden;
+        }
+
+        /* Efeito de círculos decorativos em segundo plano para visual premium */
+        .decoracao-circulo {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            filter: blur(80px);
+            z-index: 1;
+            opacity: 0.15;
+        }
+        .circulo-1 { width: 300px; height: 300px; top: -50px; left: -50px; }
+        .circulo-2 { width: 400px; height: 400px; bottom: -100px; right: -100px; }
+
+        /* Container de vidro (Glassmorphism) */
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 40px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px;
+            border: 1px rgba(255, 255, 255, 0.08) solid;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 2;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            background: linear-gradient(to right, #818cf8, #c084fc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitulo {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-bottom: 32px;
+        }
+
+        /* Formulário e campos de entrada */
+        .grupo-input {
+            position: relative;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            font-size: 0.85rem;
+            color: #cbd5e1;
+            margin-bottom: 8px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        /* Botão de Envio com Micro-Animação */
+        .botao-entrar {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border: none;
+            border-radius: 12px;
+            color: #ffffff;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 10px;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+        }
+
+        .botao-entrar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+            filter: brightness(1.1);
+        }
+
+        .botao-entrar:active {
+            transform: translateY(0);
+        }
+
+        /* Caixa de feedback visual */
+        #mensagem-feedback {
+            margin-top: 20px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            display: none;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .feedback-sucesso {
+            background-color: rgba(16, 185, 129, 0.15);
+            border: 1px solid #10b981;
+            color: #34d399;
+        }
+
+        .feedback-erro {
+            background-color: rgba(239, 68, 68, 0.15);
+            border: 1px solid #ef4444;
+            color: #f87171;
+        }
+
+        /* Lista de credenciais de teste para ajudar na avaliação do professor */
+        .dica-credenciais {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            color: #64748b;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 15px;
+            text-align: left;
+        }
+        .dica-credenciais code {
+            color: #a78bfa;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Elementos visuais de fundo -->
+    <div class="decoracao-circulo circulo-1"></div>
+    <div class="decoracao-circulo circulo-2"></div>
+
+    <div class="container">
+        <h2>Portal do Aluno</h2>
+        <p class="subtitulo">Acesse com suas credenciais acadêmicas</p>
+
+        <!-- Formulário de Login -->
+        <form id="formulario-login">
+            <div class="grupo-input">
+                <label for="usuario">Usuário</label>
+                <input type="text" id="usuario" placeholder="Digite seu usuário..." required autocomplete="username">
+            </div>
+
+            <div class="grupo-input">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" placeholder="Digite sua senha..." required autocomplete="current-password">
+            </div>
+
+            <button type="submit" class="botao-entrar" id="btn-entrar">Acessar Sistema</button>
+        </form>
+
+        <!-- Caixa de Mensagem Dinâmica -->
+        <div id="mensagem-feedback"></div>
+
+        <!-- Rodapé de apoio para apresentação da banca -->
+        <div class="dica-credenciais">
+            <strong>Dica do Trabalho (SQL Seed):</strong><br>
+            • Admin: <code>admin</code> / <code>123456</code><br>
+            • Aluno: <code>estudante</code> / <code>faculdade2026</code>
+        </div>
+    </div>
+
+    <!-- Script de Integração -->
+    <script src="login-integracao.js"></script>
+</body>
+</html>

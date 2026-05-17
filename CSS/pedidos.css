@@ -1,0 +1,275 @@
+/* =========================
+   RESET / GLOBAL
+========================= */
+* {
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  border: none;
+  text-decoration: none;
+  transition: 0.2s ease;
+  font-family: "Montserrat", sans-serif;
+}
+
+:root {
+  --branco: #fff;
+  --roxo: #552583;
+  --cinza-claro: #b8b8b8;
+  --cinza-escuro: #262626;
+  --preto: #000;
+  --amarelo: #fdb927;
+}
+
+body {
+  background: var(--cinza-escuro);
+  color: var(--branco);
+}
+
+/* =========================
+   HEADER
+========================= */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--roxo);
+  border-bottom: 2px solid var(--branco);
+}
+
+.logo-container img {
+  width: 150px;
+  padding-left: 20px;
+}
+
+.logo-container img:hover {
+  transform: scale(1.1);
+}
+
+.navbar a {
+  color: var(--branco);
+  margin: 10px;
+  font-size: 24px;
+}
+
+.navbar a:hover {
+  color: var(--amarelo);
+  text-decoration: underline 2px var(--amarelo);
+}
+
+.extras-navbar {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-right: 20px;
+}
+
+.carrinho {
+  width: 70px;
+  cursor: pointer;
+}
+
+/* =========================
+   USUÁRIO / DROPDOWN
+========================= */
+.usuario-box {
+  position: relative;
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+}
+
+.img-usuario {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+}
+
+#iniciais-usuario {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  color: var(--amarelo);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 36px;
+  opacity: 0;
+}
+
+.dropdown {
+  position: absolute;
+  top: 80px;
+  right: 0;
+  background: var(--roxo);
+  border: 1px solid var(--amarelo);
+  border-radius: 8px;
+  display: none;
+  flex-direction: column;
+  min-width: 150px;
+  z-index: 999;
+}
+
+.dropdown button {
+  background: none;
+  color: var(--branco);
+  padding: 10px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.dropdown button:hover {
+  background: var(--amarelo);
+  color: var(--preto);
+}
+
+/* =========================
+   TÍTULO
+========================= */
+.titulo {
+  text-align: center;
+  font-size: 50px;
+  font-weight: 800;
+  margin-top: 80px;
+}
+
+/* =========================
+   LISTA DE PEDIDOS
+========================= */
+.pedidos-container {
+  max-width: 1000px;
+  margin: 40px auto;
+}
+
+.pedido {
+  background: var(--roxo);
+  border: 1px solid var(--amarelo);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.pedido h3 {
+  margin-bottom: 10px;
+}
+
+.pedido-data {
+  font-size: 14px;
+  color: var(--cinza-claro);
+  margin-bottom: 10px;
+}
+
+.pedido-total {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--amarelo);
+  margin-top: 10px;
+}
+
+/* =========================
+   ITENS DO PEDIDO
+========================= */
+.item-pedido {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: 10px;
+  background: rgba(0,0,0,0.2);
+  padding: 10px;
+  border-radius: 8px;
+}
+
+.item-pedido img {
+  width: 60px;
+  border-radius: 6px;
+}
+
+.item-info {
+  flex: 1;
+}
+
+.item-info h4 {
+  font-size: 16px;
+}
+
+.item-info p {
+  font-size: 14px;
+  color: var(--cinza-claro);
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
+.sem-pedidos {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 20px;
+  color: var(--cinza-claro);
+}
+
+/* =========================
+   BOTÃO VOLTAR / AÇÃO
+========================= */
+.btn-voltar {
+  display: block;
+  margin: 30px auto;
+  padding: 10px 20px;
+  background-color: var(--cinza-escuro);
+  color: var(--cinza-claro);
+  border: 1px solid var(--amarelo);
+  text-align: center;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-voltar:hover {
+  background-color: var(--amarelo);
+  color: var(--preto);
+  font-weight: 900;
+}
+
+/* =========================
+   FOOTER
+========================= */
+.footer {
+  background-color: var(--roxo);
+  color: var(--branco);
+  padding: 25px;
+  text-align: center;
+  margin-top: 50px;
+}
+
+/* =========================
+   RESPONSIVO
+========================= */
+@media (max-width: 768px) {
+
+  .titulo {
+    font-size: 32px;
+  }
+
+  .pedido {
+    padding: 15px;
+  }
+
+  .item-pedido {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .item-pedido img {
+    width: 100%;
+    max-width: 120px;
+  }
+
+}
+
+/* =========================
+   VLIBRAS
+========================= */
+[vw] {
+  z-index: 9999 !important;
+}
